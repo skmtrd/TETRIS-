@@ -1,5 +1,323 @@
 import { useEffect, useState } from 'react';
 import styles from './index.module.css';
+
+const blocks = [
+  [
+    [0, 3],
+    [0, 4],
+    [0, 5],
+    [0, 6],
+  ],
+  [
+    [0, 4],
+    [0, 5],
+    [1, 4],
+    [1, 5],
+  ],
+  [
+    [0, 5],
+    [1, 4],
+    [1, 5],
+    [1, 6],
+  ],
+  [
+    [0, 6],
+    [1, 4],
+    [1, 5],
+    [1, 6],
+  ],
+  [
+    [0, 4],
+    [1, 4],
+    [1, 5],
+    [1, 6],
+  ],
+  [
+    [0, 5],
+    [0, 6],
+    [1, 4],
+    [1, 5],
+  ],
+  [
+    [0, 4],
+    [0, 5],
+    [1, 5],
+    [1, 6],
+  ],
+];
+const rotatePosiotions = [
+  [
+    [
+      [0, -1],
+      [0, 0],
+      [0, 1],
+      [0, 2],
+    ],
+    [
+      [0, 2],
+      [1, 2],
+      [2, 2],
+      [3, 2],
+    ],
+    [
+      [2, -2],
+      [2, -1],
+      [2, 0],
+      [2, 1],
+    ],
+    [
+      [-2, 1],
+      [-1, 1],
+      [0, 1],
+      [1, 1],
+    ],
+  ],
+  [
+    [
+      [0, 0],
+      [0, 1],
+      [1, 0],
+      [1, 1],
+    ],
+    [
+      [0, 0],
+      [0, 1],
+      [1, 0],
+      [1, 1],
+    ],
+    [
+      [0, 0],
+      [0, 1],
+      [1, 0],
+      [1, 1],
+    ],
+    [
+      [0, 0],
+      [0, 1],
+      [1, 0],
+      [1, 1],
+    ],
+  ],
+  [
+    [
+      [0, 1],
+      [1, 0],
+      [1, 1],
+      [1, 2],
+    ],
+    [
+      [0, 1],
+      [1, 1],
+      [1, 2],
+      [2, 1],
+    ],
+    [
+      [1, -1],
+      [1, 0],
+      [1, 1],
+      [2, 0],
+    ],
+    [
+      [0, 1],
+      [1, 0],
+      [1, 1],
+      [2, 1],
+    ],
+  ],
+  [
+    [
+      [2, -1],
+      [2, 0],
+      [2, 1],
+      [1, 1],
+    ],
+    [
+      [-1, 0],
+      [-1, 1],
+      [0, 1],
+      [1, 1],
+    ],
+    [
+      [2, 0],
+      [1, 0],
+      [1, 1],
+      [1, 2],
+    ],
+    [
+      [-1, 1],
+      [0, 1],
+      [1, 1],
+      [1, 2],
+    ],
+  ],
+  [
+    [
+      [2, -1],
+      [1, -1],
+      [2, 0],
+      [2, 1],
+    ],
+    [
+      [1, 0],
+      [1, 1],
+      [0, 1],
+      [-1, 1],
+    ],
+    [
+      [1, 0],
+      [1, 1],
+      [1, 2],
+      [2, 2],
+    ],
+    [
+      [-1, 2],
+      [-1, 1],
+      [0, 1],
+      [1, 1],
+    ],
+  ],
+  [
+    [
+      [1, 1],
+      [1, 2],
+      [2, 1],
+      [2, 0],
+    ],
+    [
+      [-1, 0],
+      [0, 0],
+      [0, 1],
+      [1, 1],
+    ],
+    [
+      [1, 1],
+      [1, 2],
+      [2, 1],
+      [2, 0],
+    ],
+    [
+      [-1, 0],
+      [0, 0],
+      [0, 1],
+      [1, 1],
+    ],
+  ],
+  [
+    [
+      [1, -1],
+      [1, 0],
+      [2, 0],
+      [2, 1],
+    ],
+    [
+      [-1, 2],
+      [0, 1],
+      [0, 2],
+      [1, 1],
+    ],
+    [
+      [1, -1],
+      [1, 0],
+      [2, 0],
+      [2, 1],
+    ],
+    [
+      [-1, 2],
+      [0, 1],
+      [0, 2],
+      [1, 1],
+    ],
+  ],
+];
+
+const removeBlocks = (board: number[][]) => {
+  const newBlockposition = [];
+  const removedLine = [0];
+  for (let y = 19; y >= 0; y--) {
+    const fixedBlock = [0];
+    for (let x = 0; x < 10; x++) {
+      if (board[y][x] === 2) {
+        fixedBlock[0]++;
+      }
+    }
+    if (fixedBlock[0] === 10) {
+      board[y].fill(0);
+      removedLine[0]++;
+
+      for (let f = 0; f <= y; f++) {
+        for (let x = 0; x < 10; x++) {
+          if (board[f][x] === 2) {
+            board[f][x] = 0;
+            newBlockposition.push([f + 1, x]);
+          }
+        }
+      }
+      const newBoard = replaceNumberWithArray(board, 2, newBlockposition);
+      return [newBoard, [removedLine]];
+    } else {
+      continue;
+    }
+  }
+  return [board, [[0]]];
+};
+const rotateBlock = (board: number[][], focusedBlock: number, countRotate: number) => {
+  const preBlockPosition = [];
+  const preBlockMinPosiotionY = [20];
+  const preBlockMinPosiotionX = [10];
+
+  for (let y = 0; y < 20; y++) {
+    for (let x = 0; x < 10; x++) {
+      if (board[y][x] === 1) {
+        preBlockPosition.push([y, x]);
+      }
+    }
+  }
+  for (const pos of preBlockPosition) {
+    if (pos[0] < preBlockMinPosiotionY[0]) preBlockMinPosiotionY[0] = pos[0];
+    if (pos[1] < preBlockMinPosiotionX[0]) preBlockMinPosiotionX[0] = pos[1];
+  }
+  const newBlockPosition = [];
+  const rotatePosition = rotatePosiotions[focusedBlock][countRotate % 4];
+  for (const pos of rotatePosition) {
+    const y = preBlockMinPosiotionY[0] + pos[0];
+    const x = preBlockMinPosiotionX[0] + pos[1];
+    newBlockPosition.push([y, x]);
+  }
+  const run = [0];
+  while (run[0] !== 4) {
+    run[0] = 0;
+    for (const pos of newBlockPosition) {
+      if (pos[1] > 9) {
+        for (const pos of newBlockPosition) {
+          pos[1] = pos[1] - 1;
+        }
+      } else if (pos[1] < 0) {
+        for (const pos of newBlockPosition) {
+          pos[1] = pos[1] + 1;
+        }
+      } else if (board[pos[0]] === undefined || board[pos[0]][pos[1]] === 2) {
+        return board;
+      } else {
+        run[0]++;
+      }
+    }
+  }
+  const newBoard = replaceNumberWithArray(replaceChoiceNumber(board, 1, 0), 1, newBlockPosition);
+
+  return newBoard;
+
+  return board;
+};
+const generateUniqueList = () => {
+  const numbers = [0, 1, 2, 3, 4, 5, 6];
+  for (let i = numbers.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+  }
+
+  return numbers;
+};
+
 function replaceChoiceNumber(array: number[][], preNum: number, newNum: number) {
   return array.map((row) => row.map((item) => (item === preNum ? newNum : item)));
 }
@@ -9,9 +327,6 @@ const replaceNumberWithArray = (board: number[][], num: number, array: number[][
     board[position[0]][position[1]] = num;
   }
   return board;
-};
-const getRandomIntNumber = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 const create2DArray = (rows: number, cols: number, value: number) => {
   const array = [];
@@ -118,7 +433,7 @@ const hardDrop = (board: number[][]) => {
 
 const Home = () => {
   const [board, setBoard] = useState([
-    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -139,89 +454,110 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
+  const [nextBlockBoard, setNextBoard] = useState(create2DArray(4, 4, 0));
   const [isActive, setIsActive] = useState(false);
-  const [blockMove, setBlockMove] = useState([0, 0, 0, 0, 0, 0]); //落ちる、左、右、下、回転、ハードドロッ
-
+  const [removedLine, setRemovedLine] = useState([0]);
+  const blockMove = [0, 0, 0, 0, 0, 0]; //落ちる、左、右、下、回転、ハードドロ
+  const [seconds, setSeconds] = useState(0);
+  const [blockHistory, setBlockHitory] = useState<number[][]>([[], [], [0]]);
   const startTimer = () => {
     setIsActive(true);
   };
+
+  const stopTimer = () => {
+    setIsActive(false);
+  };
+  const newNextBlockBoard = create2DArray(4, 4, 0);
+  const newRemovedLine = structuredClone(removedLine);
+  const newBlockMove = structuredClone(blockMove);
+  const newBlockHistory: number[][] | undefined = structuredClone(blockHistory);
+
   const keyDownHandler = (event: React.KeyboardEvent) => {
     event.preventDefault();
     const key = event.key;
-    const newBlockMove = structuredClone(blockMove);
     if (key === 'ArrowLeft') {
-      newBlockMove[1] = 1;
-      setBlockMove(newBlockMove);
+      newBlockMove[0] = 1;
     } else if (key === 'ArrowRight') {
-      newBlockMove[2] = 1;
-      setBlockMove(newBlockMove);
+      newBlockMove[1] = 1;
     } else if (key === 'ArrowDown') {
-      newBlockMove[3] = 1;
-      setBlockMove(newBlockMove);
+      newBlockMove[2] = 1;
     } else if (key === ' ') {
-      newBlockMove[5] = 1;
-      setBlockMove(newBlockMove);
+      newBlockMove[3] = 1;
+    } else if (key === 'ArrowUp') {
+      newBlockMove[4] = 1;
     }
-    // } else if (key === ' ') {
-    // } else if (key === 'ArrowUp') {
-    // }
   };
-  console.log(blockMove);
   useEffect(() => {
-    //タイマー管理のuseEffect
-    const newBlockMove = structuredClone(blockMove);
     let interval = null;
     if (isActive) {
-      interval = setInterval(() => {
-        newBlockMove[0] = 1;
-        setBlockMove(newBlockMove);
-      }, 1000);
-    } else if (!isActive) {
-      if (interval !== null) {
-        clearInterval(interval);
-      }
-    }
-    return () => {
-      if (interval !== null) {
-        clearInterval(interval);
-      }
-    };
-  }, [isActive, blockMove]);
+      const newBoard = structuredClone(board);
+      interval = setInterval(
+        () => {
+          setSeconds((seconds) => seconds + 1);
+          if (newBoard.flat().filter((cell) => cell === 1).length === 0) {
+            if (newBlockHistory[0].length === 0) {
+              newBlockHistory[1].length = 0;
+              const generatedBlocks = generateUniqueList();
+              for (const blocks of generatedBlocks) {
+                newBlockHistory[0].push(blocks);
+              }
+            }
+            const nextBlockType = newBlockHistory[0].shift();
+            if (newBlockHistory[0].length === 0) {
+              const generatedBlocks = generateUniqueList();
+              for (const blocks of generatedBlocks) {
+                newBlockHistory[0].push(blocks);
+              }
+            }
+            for (const position of blocks[newBlockHistory[0][0]]) {
+              newNextBlockBoard[position[0] + 1][position[1] - 3] = 1;
+            }
 
-  useEffect(() => {
-    //レンダリング管理のuseEffect
-    console.log(blockMove);
-    let interval = null;
-    const newBoard = structuredClone(board);
-    const newBlockMove = structuredClone(blockMove);
-    if (isActive) {
-      if (blockMove[0] === 1) {
-        interval = setInterval(() => {
-          setBoard(blockFall(newBoard));
-          newBlockMove[0] = 0;
-          setBlockMove(newBlockMove);
-        }, 10);
-      } else {
-        interval = setInterval(() => {
-          if (blockMove[1] === 1) {
-            setBoard(leftMoveBlock(newBoard));
-            newBlockMove[1] = 0;
-            setBlockMove(newBlockMove);
-          } else if (blockMove[2] === 1) {
-            setBoard(rightMoveBlock(newBoard));
-            newBlockMove[2] = 0;
-            setBlockMove(newBlockMove);
-          } else if (blockMove[3] === 1) {
+            nextBlockType !== undefined && newBlockHistory[1].push(nextBlockType);
+            if (nextBlockType !== undefined) {
+              for (const position of blocks[nextBlockType]) {
+                if (newBoard[position[0]][position[1]] === 2) {
+                  stopTimer();
+                  alert('game over');
+                  return;
+                }
+                newBoard[position[0]][position[1]] = 1;
+              }
+            }
+            newBlockHistory[2][0] = 0;
+
+            setNextBoard(newNextBlockBoard);
+            setBlockHitory(newBlockHistory);
+            setBoard(newBoard);
+          } else if (seconds % 100 === 0) {
             setBoard(blockFall(newBoard));
-            newBlockMove[3] = 0;
-            setBlockMove(newBlockMove);
-          } else if (blockMove[5] === 1) {
+          } else if (newBlockMove[0] === 1) {
+            setBoard(leftMoveBlock(newBoard));
+          } else if (newBlockMove[1] === 1) {
+            setBoard(rightMoveBlock(newBoard));
+          } else if (newBlockMove[2] === 1) {
+            setBoard(blockFall(newBoard));
+          } else if (newBlockMove[3] === 1) {
             setBoard(hardDrop(newBoard));
-            newBlockMove[5] = 0;
-            setBlockMove(newBlockMove);
+          } else if (newBlockMove[4] === 1) {
+            newBlockHistory[2][0]++;
+            setBoard(
+              rotateBlock(
+                newBoard,
+                newBlockHistory[1][newBlockHistory[1].length - 1],
+                newBlockHistory[2][0],
+              ),
+            );
+            setBlockHitory(newBlockHistory);
+          } else {
+            const [removedBoard, isFixed] = removeBlocks(newBoard);
+            setBoard(removedBoard);
+            newRemovedLine[0] = newRemovedLine[0] + isFixed[0][0];
+            setRemovedLine(newRemovedLine);
           }
-        }, 10);
-      }
+        },
+        (10 * 1) / Math.floor(removedLine[0] / 10 + 1),
+      );
     } else if (!isActive) {
       if (interval !== null) {
         clearInterval(interval);
@@ -232,7 +568,17 @@ const Home = () => {
         clearInterval(interval);
       }
     };
-  }, [isActive, board, blockMove]);
+  }, [
+    isActive,
+    board,
+    newBlockMove,
+    seconds,
+    newBlockHistory,
+    newRemovedLine,
+    removedLine,
+    newNextBlockBoard,
+  ]);
+
   return (
     <div className={styles.container} onKeyDown={keyDownHandler} tabIndex={0}>
       <div className={styles.base} onClick={startTimer}>
@@ -242,10 +588,44 @@ const Home = () => {
               <div
                 className={styles.cell}
                 key={`${x}-${y}`}
-                style={{ backgroundColor: board[y][x] === 0 ? 'yellow' : 'white' }}
+                style={{
+                  backgroundColor: board[y][x] === 0 ? '#80266c' : '#a85b8f',
+                  borderColor: board[y][x] === 0 ? 'black' : '#beaaa4 #ffffff #ffffff #beaaa4',
+                  borderWidth: board[y][x] === 0 ? 1 : 4,
+                }}
               />
             )),
           )}
+        </div>
+        <div className={styles.informationBoard}>
+          <div>NextBlock</div>
+          <div className={styles.informationBoardBox}>
+            {nextBlockBoard.map((row, y) =>
+              row.map((cell, x) => (
+                <div
+                  className={styles.cell}
+                  key={`${x}-${y}`}
+                  style={{
+                    backgroundColor: nextBlockBoard[y][x] === 0 ? '#80266c' : '#a85b8f',
+                    borderColor:
+                      nextBlockBoard[y][x] === 0 ? 'black' : '#beaaa4 #ffffff #ffffff #beaaa4',
+                    borderWidth: nextBlockBoard[y][x] === 0 ? 1 : 2,
+
+                    width: '20px',
+                    height: '20px',
+                  }}
+                />
+              )),
+            )}
+          </div>
+          <div>removed Line</div>
+          <div className={styles.informationBoardBox}>
+            <div>{removedLine}</div>
+          </div>
+          <div>Level</div>
+          <div className={styles.informationBoardBox}>
+            <div>{Math.floor(removedLine[0] / 10 + 1)}</div>
+          </div>
         </div>
       </div>
     </div>

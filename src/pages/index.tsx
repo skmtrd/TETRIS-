@@ -14,28 +14,7 @@ import {
 } from './function';
 
 const Home = () => {
-  const [board, setBoard] = useState([
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  ]);
+  const [board, setBoard] = useState(create2DArray(20, 10, 0));
   const [isActive, setIsActive] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [blockHistory, setBlockHitory] = useState<number[][]>([generateUniqueList(), [], [0]]);
@@ -43,6 +22,7 @@ const Home = () => {
   const blockMove = [0, 0, 0, 0, 0, 0];
   const removeLine = board.length - 20;
   const startTimer = () => {
+    setBoard(create2DArray(20, 10, 0));
     setIsActive(true);
   };
   const stopTimer = () => {
@@ -51,6 +31,26 @@ const Home = () => {
 
   const newBlockMove = structuredClone(blockMove);
   const newBlockHistory: number[][] | undefined = structuredClone(blockHistory);
+
+  const touchControlHandler = (number: number) => {
+    switch (number) {
+      case 0:
+        newBlockMove[4] = 1;
+        break;
+      case 1:
+        newBlockMove[0] = 1;
+        break;
+      case 2:
+        newBlockMove[2] = 1;
+        break;
+      case 3:
+        newBlockMove[1] = 1;
+        break;
+      case 4:
+        newBlockMove[3] = 1;
+        break;
+    }
+  };
 
   const keyDownHandler = (event: React.KeyboardEvent) => {
     event.preventDefault();
@@ -145,7 +145,18 @@ const Home = () => {
 
   return (
     <div className={styles.container} onKeyDown={keyDownHandler} tabIndex={0}>
-      <div className={styles.base} onClick={startTimer}>
+      <div
+        className={styles.stratButton}
+        onClick={startTimer}
+        style={{ visibility: isActive ? 'hidden' : 'visible' }}
+      >
+        Start
+      </div>
+      <div className={styles.topInformation}>
+        <div>Level : {Math.floor(removeLine / 10 + 1)}</div>
+        <div style={{ marginLeft: 100 }}>remove : {removeLine}</div>
+      </div>
+      <div className={styles.base}>
         <div className={styles.board}>
           {board.map((row, y) =>
             row.map((cell, x) => (
@@ -182,13 +193,26 @@ const Home = () => {
               )),
             )}
           </div>
-          <div>removed Line</div>
-          <div className={styles.informationBoardBox}>
-            <div>{removeLine}</div>
-          </div>
-          <div>Level</div>
-          <div className={styles.informationBoardBox}>
-            <div>{Math.floor(removeLine / 10 + 1)}</div>
+          <div className={styles.controlPanel}>
+            <div className={styles.panelCell} />
+            <div className={styles.panelCell} onClick={() => touchControlHandler(0)}>
+              ⟳
+            </div>
+            <div className={styles.panelCell} />
+            <div className={styles.panelCell} onClick={() => touchControlHandler(1)}>
+              ←{' '}
+            </div>
+            <div className={styles.panelCell} onClick={() => touchControlHandler(2)}>
+              ↓{' '}
+            </div>
+            <div className={styles.panelCell} onClick={() => touchControlHandler(3)}>
+              →{' '}
+            </div>
+            <div className={styles.panelCell} />
+            <div className={styles.panelCell} onClick={() => touchControlHandler(4)}>
+              ↓↓↓
+            </div>
+            <div className={styles.panelCell} />
           </div>
         </div>
       </div>

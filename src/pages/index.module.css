@@ -11,15 +11,9 @@
 
 .base {
   display: flex;
-  width: 400px;
+  width: 500px;
   height: 600px;
   background-color: black;
-  box-shadow:
-    rgb(240 46 170 / 40%) 5px 5px,
-    rgb(240 46 170 / 30%) 10px 10px,
-    rgb(240 46 170 / 20%) 15px 15px,
-    rgb(240 46 170 / 10%) 20px 20px,
-    rgb(240 46 170 / 5%) 25px 25px;
 }
 
 .board {
@@ -46,7 +40,7 @@
   flex-flow: column;
   align-items: center;
   justify-content: center;
-  width: 100px;
+  width: 200px;
   height: 600px;
   color: white;
   background-color: rgb(66 57 151);
@@ -62,4 +56,49 @@
   margin: 10px;
   color: white;
   background-color: black;
+}
+
+.topInformation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  height: 30px;
+  color: white;
+  background-color: rgb(81 71 167);
+}
+
+.controlPanel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  color: white;
+  background-color: rgb(0 0 0);
+}
+
+.panelCell {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(0 0 0);
+  border: 1px solid white;
+}
+
+.stratButton {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  height: 200px;
+  font-size: 100px;
+  color: rgb(230 29 15);
+  background-color: rgb(255 255 255 / 70%);
+  border-radius: 9999px;
 }

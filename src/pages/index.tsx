@@ -560,7 +560,7 @@ const Home = () => {
         clearInterval(interval);
       }
     };
-  }, [isActive, board, newBlockMove, seconds, newBlockHistory, nextBlockBoard]);
+  }, [isActive, board, newBlockMove, seconds, newBlockHistory, nextBlockBoard, removeLine]);
 
   return (
     <div className={styles.container} onKeyDown={keyDownHandler} tabIndex={0}>

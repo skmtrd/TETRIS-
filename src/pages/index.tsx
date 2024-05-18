@@ -232,7 +232,6 @@ const rotatePosiotions = [
 
 const removeBlocks = (board: number[][]) => {
   const newBlockposition = [];
-  const removedLine = [0];
   for (let y = 19; y >= 0; y--) {
     const fixedBlock = [0];
     for (let x = 0; x < 10; x++) {
@@ -242,7 +241,7 @@ const removeBlocks = (board: number[][]) => {
     }
     if (fixedBlock[0] === 10) {
       board[y].fill(0);
-      removedLine[0]++;
+      board.push([2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]);
 
       for (let f = 0; f <= y; f++) {
         for (let x = 0; x < 10; x++) {
@@ -253,13 +252,14 @@ const removeBlocks = (board: number[][]) => {
         }
       }
       const newBoard = replaceNumberWithArray(board, 2, newBlockposition);
-      return [newBoard, [removedLine]];
+      return newBoard;
     } else {
       continue;
     }
   }
-  return [board, [[0]]];
+  return board;
 };
+
 const rotateBlock = (board: number[][], focusedBlock: number, countRotate: number) => {
   const preBlockPosition = [];
   const preBlockMinPosiotionY = [20];
@@ -277,6 +277,7 @@ const rotateBlock = (board: number[][], focusedBlock: number, countRotate: numbe
     if (pos[1] < preBlockMinPosiotionX[0]) preBlockMinPosiotionX[0] = pos[1];
   }
   const newBlockPosition = [];
+  console.log(focusedBlock);
   const rotatePosition = rotatePosiotions[focusedBlock][countRotate % 4];
   for (const pos of rotatePosition) {
     const y = preBlockMinPosiotionY[0] + pos[0];
@@ -455,18 +456,18 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
   const [isActive, setIsActive] = useState(false);
-  const [removedLine, setRemovedLine] = useState([0]);
   const [seconds, setSeconds] = useState(0);
-  const [blockHistory, setBlockHitory] = useState<number[][]>([[], [], [0]]);
+  const [blockHistory, setBlockHitory] = useState<number[][]>([generateUniqueList(), [], [0]]);
   const nextBlockBoard = create2DArray(4, 4, 0);
-  const blockMove = [0, 0, 0, 0, 0, 0]; //落ちる、左、右、下、回転、ハードドロ
+  const blockMove = [0, 0, 0, 0, 0, 0];
+  const removeLine = [board.length - 20];
   const startTimer = () => {
     setIsActive(true);
   };
   const stopTimer = () => {
     setIsActive(false);
   };
-  const newRemovedLine = structuredClone(removedLine);
+
   const newBlockMove = structuredClone(blockMove);
   const newBlockHistory: number[][] | undefined = structuredClone(blockHistory);
 
@@ -486,14 +487,15 @@ const Home = () => {
     }
   };
   if (newBlockHistory[0].length === 0) {
-    newBlockHistory[1].length = 0;
     const generatedBlocks = generateUniqueList();
     for (const blocks of generatedBlocks) {
       newBlockHistory[0].push(blocks);
     }
   }
-  for (const position of blocks[newBlockHistory[0][0]]) {
-    nextBlockBoard[position[0] + 1][position[1] - 3] = 1;
+  if (isActive) {
+    for (const position of blocks[newBlockHistory[0][0]]) {
+      nextBlockBoard[position[0] + 1][position[1] - 3] = 1;
+    }
   }
   useEffect(() => {
     let interval = null;
@@ -503,6 +505,7 @@ const Home = () => {
         () => {
           setSeconds((seconds) => seconds + 1);
           if (newBoard.flat().filter((cell) => cell === 1).length === 0) {
+            newBlockHistory[2][0] = 0;
             const nextBlockType = newBlockHistory[0].shift();
             nextBlockType !== undefined && newBlockHistory[1].push(nextBlockType);
             if (nextBlockType !== undefined) {
@@ -515,12 +518,10 @@ const Home = () => {
                 newBoard[position[0]][position[1]] = 1;
               }
             }
-            newBlockHistory[2][0] = 0;
+            console.log(newBlockHistory[1]);
             setBlockHitory(newBlockHistory);
             setBoard(newBoard);
-            console.log('saddasd sad ', newBlockHistory);
           } else if (seconds % 100 === 0) {
-            console.log(newBlockHistory);
             setBoard(blockFall(newBoard));
           } else if (newBlockMove[0] === 1) {
             setBoard(leftMoveBlock(newBoard));
@@ -532,23 +533,22 @@ const Home = () => {
             setBoard(hardDrop(newBoard));
           } else if (newBlockMove[4] === 1) {
             newBlockHistory[2][0]++;
-            setBoard(
-              rotateBlock(
-                newBoard,
-                newBlockHistory[1][newBlockHistory[1].length - 1],
-                newBlockHistory[2][0],
-              ),
-            );
-            setBlockHitory(newBlockHistory);
+            console.log(newBlockHistory[1], newBlockHistory[1][newBlockHistory[1].length - 1]), // newBlockHistory[1][newBlockHistory[1].length - 1],
+              setBoard(
+                rotateBlock(
+                  newBoard,
+                  newBlockHistory[1][newBlockHistory[1].length - 1],
+                  newBlockHistory[2][0],
+                ),
+              );
           } else {
-            const [removedBoard, isFixed] = removeBlocks(newBoard);
+            const removedBoard = removeBlocks(newBoard);
             setBoard(removedBoard);
-            newRemovedLine[0] = newRemovedLine[0] + isFixed[0][0];
-            setRemovedLine(newRemovedLine);
           }
+
           setBlockHitory(newBlockHistory);
         },
-        (10 * 1) / Math.floor(removedLine[0] / 10 + 1),
+        (10 * 1) / Math.floor(removeLine[0] / 10 + 1),
       );
     } else if (!isActive) {
       if (interval !== null) {
@@ -560,16 +560,7 @@ const Home = () => {
         clearInterval(interval);
       }
     };
-  }, [
-    isActive,
-    board,
-    newBlockMove,
-    seconds,
-    newBlockHistory,
-    newRemovedLine,
-    removedLine,
-    nextBlockBoard,
-  ]);
+  }, [isActive, board, newBlockMove, seconds, newBlockHistory, nextBlockBoard]);
 
   return (
     <div className={styles.container} onKeyDown={keyDownHandler} tabIndex={0}>
@@ -612,11 +603,11 @@ const Home = () => {
           </div>
           <div>removed Line</div>
           <div className={styles.informationBoardBox}>
-            <div>{removedLine}</div>
+            <div>{removeLine}</div>
           </div>
           <div>Level</div>
           <div className={styles.informationBoardBox}>
-            <div>{Math.floor(removedLine[0] / 10 + 1)}</div>
+            <div>{Math.floor(removeLine[0] / 10 + 1)}</div>
           </div>
         </div>
       </div>

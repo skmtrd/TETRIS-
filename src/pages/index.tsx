@@ -454,20 +454,18 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
-  const [nextBlockBoard, setNextBoard] = useState(create2DArray(4, 4, 0));
   const [isActive, setIsActive] = useState(false);
   const [removedLine, setRemovedLine] = useState([0]);
-  const blockMove = [0, 0, 0, 0, 0, 0]; //落ちる、左、右、下、回転、ハードドロ
   const [seconds, setSeconds] = useState(0);
   const [blockHistory, setBlockHitory] = useState<number[][]>([[], [], [0]]);
+  const nextBlockBoard = create2DArray(4, 4, 0);
+  const blockMove = [0, 0, 0, 0, 0, 0]; //落ちる、左、右、下、回転、ハードドロ
   const startTimer = () => {
     setIsActive(true);
   };
-
   const stopTimer = () => {
     setIsActive(false);
   };
-  const newNextBlockBoard = create2DArray(4, 4, 0);
   const newRemovedLine = structuredClone(removedLine);
   const newBlockMove = structuredClone(blockMove);
   const newBlockHistory: number[][] | undefined = structuredClone(blockHistory);
@@ -487,6 +485,16 @@ const Home = () => {
       newBlockMove[4] = 1;
     }
   };
+  if (newBlockHistory[0].length === 0) {
+    newBlockHistory[1].length = 0;
+    const generatedBlocks = generateUniqueList();
+    for (const blocks of generatedBlocks) {
+      newBlockHistory[0].push(blocks);
+    }
+  }
+  for (const position of blocks[newBlockHistory[0][0]]) {
+    nextBlockBoard[position[0] + 1][position[1] - 3] = 1;
+  }
   useEffect(() => {
     let interval = null;
     if (isActive) {
@@ -495,24 +503,7 @@ const Home = () => {
         () => {
           setSeconds((seconds) => seconds + 1);
           if (newBoard.flat().filter((cell) => cell === 1).length === 0) {
-            if (newBlockHistory[0].length === 0) {
-              newBlockHistory[1].length = 0;
-              const generatedBlocks = generateUniqueList();
-              for (const blocks of generatedBlocks) {
-                newBlockHistory[0].push(blocks);
-              }
-            }
             const nextBlockType = newBlockHistory[0].shift();
-            if (newBlockHistory[0].length === 0) {
-              const generatedBlocks = generateUniqueList();
-              for (const blocks of generatedBlocks) {
-                newBlockHistory[0].push(blocks);
-              }
-            }
-            for (const position of blocks[newBlockHistory[0][0]]) {
-              newNextBlockBoard[position[0] + 1][position[1] - 3] = 1;
-            }
-
             nextBlockType !== undefined && newBlockHistory[1].push(nextBlockType);
             if (nextBlockType !== undefined) {
               for (const position of blocks[nextBlockType]) {
@@ -525,11 +516,11 @@ const Home = () => {
               }
             }
             newBlockHistory[2][0] = 0;
-
-            setNextBoard(newNextBlockBoard);
             setBlockHitory(newBlockHistory);
             setBoard(newBoard);
+            console.log('saddasd sad ', newBlockHistory);
           } else if (seconds % 100 === 0) {
+            console.log(newBlockHistory);
             setBoard(blockFall(newBoard));
           } else if (newBlockMove[0] === 1) {
             setBoard(leftMoveBlock(newBoard));
@@ -555,6 +546,7 @@ const Home = () => {
             newRemovedLine[0] = newRemovedLine[0] + isFixed[0][0];
             setRemovedLine(newRemovedLine);
           }
+          setBlockHitory(newBlockHistory);
         },
         (10 * 1) / Math.floor(removedLine[0] / 10 + 1),
       );
@@ -576,7 +568,7 @@ const Home = () => {
     newBlockHistory,
     newRemovedLine,
     removedLine,
-    newNextBlockBoard,
+    nextBlockBoard,
   ]);
 
   return (

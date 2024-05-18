@@ -460,7 +460,7 @@ const Home = () => {
   const [blockHistory, setBlockHitory] = useState<number[][]>([generateUniqueList(), [], [0]]);
   const nextBlockBoard = create2DArray(4, 4, 0);
   const blockMove = [0, 0, 0, 0, 0, 0];
-  const removeLine = [board.length - 20];
+  const removeLine = board.length - 20;
   const startTimer = () => {
     setIsActive(true);
   };
@@ -533,7 +533,7 @@ const Home = () => {
             setBoard(hardDrop(newBoard));
           } else if (newBlockMove[4] === 1) {
             newBlockHistory[2][0]++;
-            console.log(newBlockHistory[1], newBlockHistory[1][newBlockHistory[1].length - 1]), // newBlockHistory[1][newBlockHistory[1].length - 1],
+            console.log(newBlockHistory[1], newBlockHistory[1][newBlockHistory[1].length - 1]),
               setBoard(
                 rotateBlock(
                   newBoard,
@@ -548,7 +548,7 @@ const Home = () => {
 
           setBlockHitory(newBlockHistory);
         },
-        (10 * 1) / Math.floor(removeLine[0] / 10 + 1),
+        (10 * 1) / Math.floor(removeLine / 10 + 1),
       );
     } else if (!isActive) {
       if (interval !== null) {
@@ -607,7 +607,7 @@ const Home = () => {
           </div>
           <div>Level</div>
           <div className={styles.informationBoardBox}>
-            <div>{Math.floor(removeLine[0] / 10 + 1)}</div>
+            <div>{Math.floor(removeLine / 10 + 1)}</div>
           </div>
         </div>
       </div>

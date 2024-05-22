@@ -11,7 +11,7 @@ import {
   rotateBlock,
   removeBlocks,
   blocks,
-} from './function';
+} from '../function';
 
 const Home = () => {
   const [board, setBoard] = useState(create2DArray(20, 10, 0));
@@ -111,7 +111,9 @@ const Home = () => {
           } else if (newBlockMove[2] === 1) {
             setBoard(blockFall(newBoard));
           } else if (newBlockMove[3] === 1) {
-            setBoard(hardDrop(newBoard));
+            const updatedBoard: number[][] | undefined = hardDrop(newBoard);
+            if (updatedBoard === undefined) return;
+            setBoard(updatedBoard);
           } else if (newBlockMove[4] === 1) {
             newBlockHistory[2][0]++;
             console.log(newBlockHistory[1], newBlockHistory[1][newBlockHistory[1].length - 1]),

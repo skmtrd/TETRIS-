@@ -441,5 +441,4 @@ const hardDrop = (board: number[][]) => {
     if (contineuFalling[0] === 1) continue;
     return newBoard;
   }
-  return newBoard;
 };

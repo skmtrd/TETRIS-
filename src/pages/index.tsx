@@ -166,8 +166,8 @@ const Home = () => {
                 className={styles.cell}
                 key={`${x}-${y}`}
                 style={{
-                  backgroundColor: board[y][x] === 0 ? '#80266c' : '#a85b8f',
-                  borderColor: board[y][x] === 0 ? 'black' : '#beaaa4 #ffffff #ffffff #beaaa4',
+                  backgroundColor: board[y][x] === 0 ? '#98d7f5' : '#a556ff',
+                  borderColor: board[y][x] === 0 ? '#beefff' : ' #cecece  #c69bff  #c69bff #cecece',
                   borderWidth: board[y][x] === 0 ? 1 : 4,
                 }}
               />
@@ -183,11 +183,11 @@ const Home = () => {
                   className={styles.cell}
                   key={`${x}-${y}`}
                   style={{
-                    backgroundColor: nextBlockBoard[y][x] === 0 ? '#80266c' : '#a85b8f',
+                    backgroundColor: nextBlockBoard[y][x] === 0 ? '#98d7f5' : '#a556ff',
                     borderColor:
-                      nextBlockBoard[y][x] === 0 ? 'black' : '#beaaa4 #ffffff #ffffff #beaaa4',
-                    borderWidth: nextBlockBoard[y][x] === 0 ? 1 : 2,
-
+                      nextBlockBoard[y][x] === 0 ? '#beefff' : ' #cecece  #c69bff  #c69bff #cecece',
+                    borderWidth: nextBlockBoard[y][x] === 0 ? 1 : 3,
+                    borderRadius: '4px',
                     width: '20px',
                     height: '20px',
                   }}
@@ -195,7 +195,11 @@ const Home = () => {
               )),
             )}
           </div>
-          <div className={styles.controlPanel}>
+          <div className={styles.buttonsBox}>
+            <div className={styles.buttons} />
+            <div className={styles.buttons} />
+          </div>
+          {/* <div className={styles.controlPanel}>
             <div className={styles.panelCell} />
             <div className={styles.panelCell} onClick={() => touchControlHandler(0)}>
               ⟳
@@ -215,7 +219,7 @@ const Home = () => {
               ↓↓↓
             </div>
             <div className={styles.panelCell} />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

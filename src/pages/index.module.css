@@ -130,6 +130,7 @@
   height: 30px;
   font-weight: bold;
   color: white;
+  user-select: none;
   background-color: rgb(43 40 162);
   border-radius: 7px;
   box-shadow: 0 5px 0 rgb(0 217 255);

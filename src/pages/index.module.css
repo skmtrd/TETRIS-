@@ -6,6 +6,7 @@
   height: 100vh;
   min-height: 100vh;
   padding: 0 0.5rem;
+  background-color: rgb(84 218 255 / 30%);
 }
 
 .base {
@@ -33,7 +34,6 @@
   flex-wrap: wrap;
   width: 30px;
   height: 30px;
-  background-color: yellow;
   border: 1px solid black;
   border-radius: 7px;
   box-shadow: rgb(149 157 165 / 20%) 0 8px 24px;

@@ -222,7 +222,7 @@ const Home = () => {
               ↻
             </div>
           </div>
-          <div className={styles.buttonsBox} style={{ gap: 2, marginTop: 8 }}>
+          <div className={styles.buttonsBox} style={{ gap: 4, marginTop: 8 }}>
             <div className={styles.buttons} onClick={() => touchControlHandler(1)}>
               ←
             </div>

@@ -11,6 +11,7 @@ import {
   rotateBlock,
   removeBlocks,
   blocks,
+  ShadowBlock,
 } from '../function';
 
 const Home = () => {
@@ -185,15 +186,19 @@ const Home = () => {
         <div className={styles.board}>
           {board.map((row, y) =>
             row.map((cell, x) => (
-              <div
-                className={styles.cell}
-                key={`${x}-${y}`}
-                style={{
-                  backgroundColor: board[y][x] === 0 ? '#98d7f5' : '#a556ff',
-                  borderColor: board[y][x] === 0 ? '#beefff' : ' #cecece  #c69bff  #c69bff #cecece',
-                  borderWidth: board[y][x] === 0 ? 1 : 4,
-                }}
-              />
+              <>
+                <div
+                  className={styles.cell}
+                  key={`${x}-${y}`}
+                  style={{
+                    backgroundColor: board[y][x] === 0 ? '#98d7f5' : '#a556ff',
+                    borderColor:
+                      board[y][x] === 0 ? '#beefff' : ' #cecece  #c69bff  #c69bff #cecece',
+                    borderWidth: board[y][x] === 0 ? 1 : 4,
+                  }}
+                />
+                {cell === 3 && <div className={styles.shadow} />}
+              </>
             )),
           )}
         </div>

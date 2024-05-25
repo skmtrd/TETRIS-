@@ -9,6 +9,7 @@ export {
   rightMoveBlock,
   rotateBlock,
   removeBlocks,
+  ShadowBlock,
   blocks,
   rotatePosiotions,
 };
@@ -441,4 +442,34 @@ const hardDrop = (board: number[][]) => {
     if (contineuFalling[0] === 1) continue;
     return newBoard;
   }
+};
+
+const ShadowBlock = (board: number[][]) => {
+  const currentBlockPosition = [];
+  for (let y = 0; y < 20; y++) {
+    for (let x = 0; x < 10; x++) {
+      if (board[y][x] === 1) {
+        currentBlockPosition.push([y, x]);
+      }
+    }
+  }
+  const run = true;
+  let newBoard: number[][] = board;
+  while (run) {
+    const falledBoard = blockFall(newBoard);
+    const contineuFalling = [0];
+    for (const row of falledBoard) {
+      for (const cell of row) {
+        if (cell === 1) {
+          newBoard = falledBoard;
+          contineuFalling[0] = 1;
+          break;
+        }
+      }
+      if (contineuFalling[0] === 1) break;
+    }
+    if (contineuFalling[0] === 1) continue;
+    return replaceNumberWithArray(replaceChoiceNumber(newBoard, 1, 3), 1, currentBlockPosition);
+  }
+  return newBoard;
 };

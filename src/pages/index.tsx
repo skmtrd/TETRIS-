@@ -23,6 +23,9 @@ const Home = () => {
   const blockMove = [0, 0, 0, 0, 0, 0];
   const removeLine = board.length - 20;
 
+  const newBlockMove = structuredClone(blockMove);
+  const newBlockHistory: number[][] | undefined = structuredClone(blockHistory);
+
   const toggleButtonHandler = () => {
     if (isActive) {
       setIsActive(false);
@@ -37,9 +40,6 @@ const Home = () => {
     setIsActive(false);
     setBlockHitory([generateUniqueList(), [], [0]]);
   };
-
-  const newBlockMove = structuredClone(blockMove);
-  const newBlockHistory: number[][] | undefined = structuredClone(blockHistory);
 
   const touchControlHandler = (number: number) => {
     switch (number) {

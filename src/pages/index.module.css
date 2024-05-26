@@ -133,19 +133,3 @@
   background-color: rgb(0 0 0 / 70%);
   border-radius: 7px;
 }
-
-@media screen and (width <= 800px) {
-  .container {
-    align-items: center;
-    justify-content: center;
-  }
-
-  .base {
-    margin-top: 5%;
-  }
-
-  .buttonsControlPanel {
-    position: static;
-    visibility: visible;
-  }
-}

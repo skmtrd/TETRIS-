@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
 import { motion } from 'framer-motion';
 import styles from './index.module.css';
 
@@ -13,7 +14,6 @@ import {
   removeBlocks,
   blocks,
 } from '../function';
-
 const Home = () => {
   const [board, setBoard] = useState(create2DArray(20, 10, 0));
   const [isActive, setIsActive] = useState(false);
@@ -22,13 +22,6 @@ const Home = () => {
   const nextBlockBoard = create2DArray(4, 4, 0);
   const blockMove = [0, 0, 0, 0, 0, 0];
   const removeLine = board.length - 20;
-  const startTimer = () => {
-    setIsActive(true);
-  };
-
-  const stopTimer = () => {
-    setIsActive(false);
-  };
 
   const toggleButtonHandler = () => {
     if (isActive) {
@@ -77,22 +70,47 @@ const Home = () => {
   const keyDownHandler = (event: React.KeyboardEvent) => {
     event.preventDefault();
     const key = event.key;
-    if (key === 'ArrowLeft') {
-      newBlockMove[0] = 1;
-    } else if (key === 'ArrowRight') {
-      newBlockMove[1] = 1;
-    } else if (key === 'ArrowDown') {
-      newBlockMove[2] = 1;
-    } else if (key === ' ') {
-      newBlockMove[3] = 1;
-    } else if (key === 'ArrowUp') {
-      newBlockMove[4] = 1;
-    } else if (key === 'Enter') {
-      isActive ? stopTimer() : startTimer();
-    } else if (key === 'r' || key === 'R') {
-      resetButtonHandler();
+    switch (key) {
+      case 'ArrowLeft':
+        newBlockMove[0] = 1;
+        break;
+      case 'ArrowRight':
+        newBlockMove[1] = 1;
+        break;
+      case 'ArrowDown':
+        newBlockMove[2] = 1;
+        break;
+      case ' ':
+        newBlockMove[3] = 1;
+        break;
+      case 'ArrowUp':
+        newBlockMove[4] = 1;
+        break;
+      case 'Enter':
+        toggleButtonHandler();
+        break;
+      case 'r':
+      case 'R':
+        resetButtonHandler();
+        break;
+      default:
+        break;
     }
   };
+
+  const rotateTouchHandler = () => {
+    newBlockMove[4] = 1;
+  };
+
+  const hanlers = useSwipeable({
+    preventScrollOnSwipe: true,
+    delta: 2,
+    trackTouch: true,
+    onSwipedLeft: () => touchControlHandler(1),
+    onSwipedRight: () => touchControlHandler(3),
+    onSwipedDown: () => touchControlHandler(4),
+  });
+
   if (newBlockHistory[0].length === 0) {
     const generatedBlocks = generateUniqueList();
     for (const blocks of generatedBlocks) {
@@ -119,7 +137,7 @@ const Home = () => {
           if (nextBlockType !== undefined) {
             for (const position of blocks[nextBlockType]) {
               if (newBoard[position[0]][position[1]] === 2) {
-                stopTimer();
+                setIsActive(false);
                 alert('game over');
                 return;
               }
@@ -178,7 +196,13 @@ const Home = () => {
   }, [isActive, board, newBlockMove, seconds, newBlockHistory, nextBlockBoard, removeLine]);
 
   return (
-    <div className={styles.container} onKeyDown={keyDownHandler} tabIndex={0}>
+    <div
+      className={styles.container}
+      onKeyDown={keyDownHandler}
+      tabIndex={0}
+      {...hanlers}
+      onClick={rotateTouchHandler}
+    >
       <div className={styles.base}>
         <div className={styles.topInformation}>
           <div>Level : {Math.floor(removeLine / 10 + 1)}</div>
@@ -249,29 +273,6 @@ const Home = () => {
             >
               {isActive ? 'Stop' : 'Start'}
             </div>
-          </div>
-        </div>
-      </div>
-      <div className={styles.controlPanel}>
-        <div style={{ display: 'flex' }}>
-          <div className={styles.buttonsControlPanel} onClick={() => touchControlHandler(0)}>
-            ↻
-          </div>
-        </div>
-        <div style={{ display: 'flex', gap: '30px' }}>
-          <div className={styles.buttonsControlPanel} onClick={() => touchControlHandler(1)}>
-            ←
-          </div>
-          <div className={styles.buttonsControlPanel} onClick={() => touchControlHandler(2)}>
-            ↓
-          </div>
-          <div className={styles.buttonsControlPanel} onClick={() => touchControlHandler(3)}>
-            →
-          </div>
-        </div>
-        <div style={{ display: 'flex' }}>
-          <div className={styles.buttonsControlPanel} onClick={() => touchControlHandler(4)}>
-            ↓↓↓
           </div>
         </div>
       </div>

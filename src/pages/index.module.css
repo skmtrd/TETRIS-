@@ -49,7 +49,7 @@
   width: 130px;
   height: 630px;
   color: white;
-  background: linear-gradient(rgb(140 140 255), rgb(79 79 255), rgb(95 71 255));
+  background: linear-gradient(rgb(140 140 255), rgb(30 0 100), rgb(127 107 255));
   border-radius: 7px;
 }
 
@@ -76,17 +76,6 @@
   color: white;
   background-color: rgb(43 40 162);
   border-radius: 7px;
-}
-
-.controlPanel {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  align-items: center;
-  justify-content: center;
-  width: 156px;
-  height: 140px;
-  color: white;
 }
 
 .panelCell {
@@ -139,6 +128,22 @@
   transition: all 0.07s 0s linear;
 }
 
+.buttonsControlPanel {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 60px;
+  font-weight: bold;
+  color: white;
+  user-select: none;
+  background: linear-gradient(to right, rgb(44 44 233), rgb(63 63 255), rgb(87 62 255));
+  border-radius: 7px;
+  box-shadow: 0 10px 0 rgb(62 123 254);
+  transition: all 0.07s 0s linear;
+}
+
 .curtain {
   position: absolute;
   z-index: 1;
@@ -156,12 +161,41 @@
   border-radius: 7px;
 }
 
+.controlPanel {
+  display: flex;
+  flex-flow: column;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+}
+
+.controlPanel :active {
+  box-shadow: none;
+  transform: translateY(8px);
+}
+
 .shadow {
-  position: absolute;
   z-index: 1;
   display: flex;
   width: 30px;
   height: 30px;
   background-color: rgb(0 0 0 / 70%);
   border-radius: 7px;
+}
+
+@media screen and (width <= 800px) {
+  .container {
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .base {
+    margin-top: 5%;
+  }
+
+  .buttonsControlPanel {
+    position: static;
+    visibility: visible;
+  }
 }

@@ -231,32 +231,9 @@ const Home = () => {
               )),
             )}
           </div>
-          <div className={styles.buttonsBox} style={{ gap: 2, marginTop: 80 }}>
-            <div className={styles.buttons} onClick={() => touchControlHandler(0)}>
-              ↻
-            </div>
-          </div>
-          <div className={styles.buttonsBox} style={{ gap: 4, marginTop: 8 }}>
-            <div className={styles.buttons} onClick={() => touchControlHandler(1)}>
-              ←
-            </div>
-            <div className={styles.buttons} onClick={() => touchControlHandler(2)}>
-              ↓
-            </div>
-            <div className={styles.buttons} onClick={() => touchControlHandler(3)}>
-              →
-            </div>
-          </div>
-          <div
-            className={styles.buttons}
-            style={{ marginTop: 8 }}
-            onClick={() => touchControlHandler(4)}
-          >
-            ↓↓↓
-          </div>
           <div
             className={styles.buttonsBox}
-            style={{ marginTop: 130, flexFlow: 'column', gap: 15 }}
+            style={{ marginTop: 240, flexFlow: 'column', gap: 15 }}
           >
             <div
               className={styles.buttons}
@@ -272,6 +249,29 @@ const Home = () => {
             >
               {isActive ? 'Stop' : 'Start'}
             </div>
+          </div>
+        </div>
+      </div>
+      <div className={styles.controlPanel}>
+        <div style={{ display: 'flex' }}>
+          <div className={styles.buttonsControlPanel} onClick={() => touchControlHandler(0)}>
+            ↻
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: '30px' }}>
+          <div className={styles.buttonsControlPanel} onClick={() => touchControlHandler(1)}>
+            ←
+          </div>
+          <div className={styles.buttonsControlPanel} onClick={() => touchControlHandler(2)}>
+            ↓
+          </div>
+          <div className={styles.buttonsControlPanel} onClick={() => touchControlHandler(3)}>
+            →
+          </div>
+        </div>
+        <div style={{ display: 'flex' }}>
+          <div className={styles.buttonsControlPanel} onClick={() => touchControlHandler(4)}>
+            ↓↓↓
           </div>
         </div>
       </div>

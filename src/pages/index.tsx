@@ -153,6 +153,7 @@ const Home = () => {
               if (newBoard[position[0]][position[1]] >= 10) {
                 setIsActive(false);
                 alert('game over');
+                setBoard(create2DArray(20, 10, 0));
                 return;
               }
               newBoard[position[0]][position[1]] =
@@ -232,9 +233,7 @@ const Home = () => {
       <div className={styles.base}>
         <div className={styles.topInformation}>
           <div className={styles.strings}>Level : {Math.floor(removeLine / 10 + 1)}</div>
-          <div className={styles.strings} style={{ marginLeft: 100 }}>
-            remove : {removeLine}
-          </div>
+          <div className={styles.strings}>Remove : {removeLine}</div>
         </div>
         <div className={styles.curtain} style={{ visibility: isActive ? 'hidden' : 'visible' }}>
           Press Start or Enter Key
@@ -247,10 +246,10 @@ const Home = () => {
                   className={styles.cell}
                   key={`${x}-${y}`}
                   style={{
-                    backgroundColor: board[y][x] === 0 ? '#0f0f0f' : colors[board[y][x] % 10][0],
+                    backgroundColor: board[y][x] === 0 ? '#0a0a0a' : colors[board[y][x] % 10][0],
                     borderColor:
                       board[y][x] === 0
-                        ? '#444444'
+                        ? '#1a1a1a'
                         : 'rgba(255, 255, 255, 0.514) rgba(0,0,0, 0.253)rgba(0,0,0, 0.253) rgba(255, 255, 255, 0.514)',
                     borderWidth: board[y][x] === 0 ? 1 : 4,
                     borderRadius: board[y][x] === 0 ? 0 : 3,
@@ -274,7 +273,7 @@ const Home = () => {
                   key={`${x}-${y}`}
                   style={{
                     backgroundColor:
-                      nextBlockBoard[y][x] === 0 ? '#2b2b2b' : colors[nextBlockBoard[y][x] % 10][0],
+                      nextBlockBoard[y][x] === 0 ? '#161616' : colors[nextBlockBoard[y][x] % 10][0],
                     borderColor:
                       nextBlockBoard[y][x] === 0
                         ? '#ffffff'

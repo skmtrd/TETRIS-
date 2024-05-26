@@ -15,13 +15,13 @@ export {
 };
 const colors = [
   ['#fff'],
-  ['#535eff'],
-  ['yellow'],
-  ['purple'],
-  ['blue'],
-  ['green'],
-  ['#4c7435'],
-  ['red'],
+  ['#ff1e1e'],
+  ['#8e1eff'],
+  ['#1e1eff'],
+  ['#1eff8e'],
+  ['#8eff1e'],
+  ['#ffff1e'],
+  ['#ff8e1e'],
 ];
 
 const blocks = [

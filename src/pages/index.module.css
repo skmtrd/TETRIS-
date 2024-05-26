@@ -26,12 +26,12 @@
   flex-wrap: wrap;
   width: 300px;
   height: 600px;
-  margin-top: 30px;
+  margin-top: 60px;
   overflow: hidden;
   background: #0f0f0f;
   border-radius: 7px;
-  outline: solid 3px #050505;
-  outline-offset: -1px;
+  outline: solid 7px #161616;
+  outline-offset: -2px;
 }
 
 .cell {
@@ -64,7 +64,7 @@
   height: 80px;
   margin: 10px;
   margin-top: 100px;
-  background-color: #2b2b2b;
+  background-color: #161616;
   background-color: 131313;
   border-radius: 3px;
 }
@@ -84,9 +84,10 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 300px;
   height: 30px;
+  font-weight: bold;
   color: rgb(179 179 179);
   background-color: #050505;
 }
@@ -107,13 +108,14 @@
 .buttonsBox {
   display: flex;
   gap: 5px;
-  margin-top: 240px;
+  margin-top: 380px;
   box-shadow:
     0 10px 20px rgb(0 0 0 / 12%),
     0 6px 6px rgb(0 0 0 / 16%);
 }
 
 .buttonsBox :active {
+  background-color: #0f0f0f;
   box-shadow: none;
   scale: 0.95;
 }
@@ -124,9 +126,10 @@
   justify-content: center;
   width: 100px;
   height: 35px;
+  font-weight: bold;
   color: rgb(199 199 199);
   user-select: none;
-  background: #131313;
+  background: #0f0f0f;
   border-radius: 7px;
   transition: all 0.03s 0s linear;
 }
@@ -140,15 +143,22 @@
   justify-content: center;
   width: 300px;
   height: 600px;
-  margin-top: 30px;
+  margin-top: 60px;
   font-size: 20px;
   color: #ebebeb;
   background-color: rgb(0 0 0 / 70%);
+  border-radius: 7px;
+}
+
+.strings {
+  display: flex;
+  font-size: 19px;
+  color: #ebebeb;
 }
 
 @media (width <= 768px) {
   .strings {
-    font-size: 11px;
+    font-size: 15px;
   }
 
   .base {
@@ -159,7 +169,7 @@
   .board {
     width: calc(300px * 2 / 3);
     height: calc(600px * 2 / 3);
-    margin-top: calc(30px * 2 / 3);
+    margin-top: 50px;
   }
 
   .cell {
@@ -185,8 +195,8 @@
   }
 
   .topInformation {
-    width: calc(300px * 2 / 3);
-    height: calc(30px * 2 / 3);
+    width: 200px;
+    height: 30px;
   }
 
   .stratButton {
@@ -198,17 +208,17 @@
   .curtain {
     width: calc(300px * 2 / 3);
     height: calc(600px * 2 / 3);
-    margin-top: calc(30px * 2 / 3);
+    margin-top: 50px;
     font-size: calc(20px * 2 / 3);
   }
 
   .buttons {
     width: calc(100px * 2 / 3);
-    height: calc(30px * 2 / 3);
+    height: 25px;
   }
 
   .buttonsBox {
-    margin-top: calc(240px * 2 / 3);
-    font-size: 13px;
+    margin-top: 255px;
+    font-size: 10px;
   }
 }

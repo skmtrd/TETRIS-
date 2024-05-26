@@ -15,7 +15,115 @@ import {
 } from '../function';
 
 const Home = () => {
-  const [board, setBoard] = useState(create2DArray(20, 10, 0));
+  const [board, setBoard] = useState([
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+  ]);
   const [isActive, setIsActive] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [blockHistory, setBlockHitory] = useState<number[][]>([[], [], []]);
@@ -106,9 +214,10 @@ const Home = () => {
   }
 
   useEffect(() => {
+    console.log('useEffect');
     let interval = null;
     if (isActive) {
-      const newBoard = structuredClone(board);
+      let newBoard = structuredClone(board);
       interval = setInterval(() => {
         setSeconds((seconds) => seconds + 1);
         if (newBoard.flat().filter((cell) => cell === 1).length === 0) {
@@ -128,35 +237,40 @@ const Home = () => {
           console.log(newBlockHistory[1]);
           setBlockHitory(newBlockHistory);
           setBoard(newBoard);
-        } else if (seconds % (20 * (1 / Math.floor(removeLine / 10 + 1))) === 0) {
-          setBoard(blockFall(newBoard));
-        } else if (newBlockMove[0] === 1) {
-          setBoard(leftMoveBlock(newBoard));
-        } else if (newBlockMove[1] === 1) {
-          setBoard(rightMoveBlock(newBoard));
-        } else if (newBlockMove[2] === 1) {
-          setBoard(blockFall(newBoard));
-        } else if (newBlockMove[3] === 1) {
-          const updatedBoard: number[][] | undefined = hardDrop(newBoard);
-          if (updatedBoard === undefined) return;
-          setBoard(updatedBoard);
-        } else if (newBlockMove[4] === 1) {
-          newBlockHistory[2][0]++;
-          console.log(newBlockHistory[1], newBlockHistory[1][newBlockHistory[1].length - 1]),
-            setBoard(
-              rotateBlock(
-                newBoard,
-                newBlockHistory[1][newBlockHistory[1].length - 1],
-                newBlockHistory[2][0],
-              ),
-            );
         } else {
-          const removedBoard = removeBlocks(newBoard);
-          setBoard(removedBoard);
+          if (seconds % (20 - Math.floor(removeLine / 10 + 1) * 2) === 0) {
+            console.log(20 - Math.floor(removeLine / 10 + 1) * 2);
+            console.log('fall');
+            newBoard = blockFall(newBoard);
+          }
+          if (newBlockMove[0] === 1) {
+            setBoard(leftMoveBlock(newBoard));
+          } else if (newBlockMove[1] === 1) {
+            setBoard(rightMoveBlock(newBoard));
+          } else if (newBlockMove[2] === 1) {
+            setBoard(blockFall(newBoard));
+          } else if (newBlockMove[3] === 1) {
+            const updatedBoard: number[][] | undefined = hardDrop(newBoard);
+            if (updatedBoard === undefined) return;
+            setBoard(updatedBoard);
+          } else if (newBlockMove[4] === 1) {
+            newBlockHistory[2][0]++;
+            console.log(newBlockHistory[1], newBlockHistory[1][newBlockHistory[1].length - 1]),
+              setBoard(
+                rotateBlock(
+                  newBoard,
+                  newBlockHistory[1][newBlockHistory[1].length - 1],
+                  newBlockHistory[2][0],
+                ),
+              );
+          } else {
+            console.log('continue');
+            const removedBoard = removeBlocks(newBoard);
+            setBoard(removedBoard);
+          }
         }
-
         setBlockHitory(newBlockHistory);
-      }, 30);
+      }, 50);
     } else if (!isActive) {
       if (interval !== null) {
         clearInterval(interval);
@@ -197,7 +311,7 @@ const Home = () => {
                     opacity: board[y].every((cell) => cell !== 0) ? [1, 0, 1, 0] : 1,
                     scale: board[y].every((cell) => cell !== 0) ? 0 : 1,
                   }}
-                  transition={{ duration: 0.1 }}
+                  transition={{ duration: 0.05 }}
                 />
               </>
             )),

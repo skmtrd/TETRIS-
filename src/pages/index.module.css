@@ -40,7 +40,6 @@
   border: 1px solid black;
   border-radius: 7px;
   box-shadow: rgb(149 157 165 / 20%) 0 8px 24px;
-  transition: all 0.02s 0s linear;
 }
 
 .informationBoard {

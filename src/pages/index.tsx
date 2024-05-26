@@ -104,13 +104,15 @@ const Home = () => {
 
   const hanlers = useSwipeable({
     preventScrollOnSwipe: true,
-    delta: 20,
+    delta: 30,
     trackTouch: true,
     onSwiping: (evenData) => {
-      if (evenData.dir === 'Left') {
-        touchControlHandler(1);
-      } else if (evenData.dir === 'Right') {
-        touchControlHandler(3);
+      if (evenData.absX > 100) {
+        if (evenData.dir === 'Left') {
+          touchControlHandler(1);
+        } else if (evenData.dir === 'Right') {
+          touchControlHandler(3);
+        }
       }
     },
     onSwipedLeft: () => touchControlHandler(1),

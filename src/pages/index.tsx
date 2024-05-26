@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import styles from './index.module.css';
 
 import {
@@ -11,7 +12,6 @@ import {
   rotateBlock,
   removeBlocks,
   blocks,
-  ShadowBlock,
 } from '../function';
 
 const Home = () => {
@@ -23,7 +23,6 @@ const Home = () => {
   const blockMove = [0, 0, 0, 0, 0, 0];
   const removeLine = board.length - 20;
   const startTimer = () => {
-    setBoard(create2DArray(20, 10, 0));
     setIsActive(true);
   };
 
@@ -110,57 +109,54 @@ const Home = () => {
     let interval = null;
     if (isActive) {
       const newBoard = structuredClone(board);
-      interval = setInterval(
-        () => {
-          setSeconds((seconds) => seconds + 1);
-          if (newBoard.flat().filter((cell) => cell === 1).length === 0) {
-            newBlockHistory[2][0] = 0;
-            const nextBlockType = newBlockHistory[0].shift();
-            nextBlockType !== undefined && newBlockHistory[1].push(nextBlockType);
-            if (nextBlockType !== undefined) {
-              for (const position of blocks[nextBlockType]) {
-                if (newBoard[position[0]][position[1]] === 2) {
-                  stopTimer();
-                  alert('game over');
-                  return;
-                }
-                newBoard[position[0]][position[1]] = 1;
+      interval = setInterval(() => {
+        setSeconds((seconds) => seconds + 1);
+        if (newBoard.flat().filter((cell) => cell === 1).length === 0) {
+          newBlockHistory[2][0] = 0;
+          const nextBlockType = newBlockHistory[0].shift();
+          nextBlockType !== undefined && newBlockHistory[1].push(nextBlockType);
+          if (nextBlockType !== undefined) {
+            for (const position of blocks[nextBlockType]) {
+              if (newBoard[position[0]][position[1]] === 2) {
+                stopTimer();
+                alert('game over');
+                return;
               }
+              newBoard[position[0]][position[1]] = 1;
             }
-            console.log(newBlockHistory[1]);
-            setBlockHitory(newBlockHistory);
-            setBoard(newBoard);
-          } else if (seconds % 100 === 0) {
-            setBoard(blockFall(newBoard));
-          } else if (newBlockMove[0] === 1) {
-            setBoard(leftMoveBlock(newBoard));
-          } else if (newBlockMove[1] === 1) {
-            setBoard(rightMoveBlock(newBoard));
-          } else if (newBlockMove[2] === 1) {
-            setBoard(blockFall(newBoard));
-          } else if (newBlockMove[3] === 1) {
-            const updatedBoard: number[][] | undefined = hardDrop(newBoard);
-            if (updatedBoard === undefined) return;
-            setBoard(updatedBoard);
-          } else if (newBlockMove[4] === 1) {
-            newBlockHistory[2][0]++;
-            console.log(newBlockHistory[1], newBlockHistory[1][newBlockHistory[1].length - 1]),
-              setBoard(
-                rotateBlock(
-                  newBoard,
-                  newBlockHistory[1][newBlockHistory[1].length - 1],
-                  newBlockHistory[2][0],
-                ),
-              );
-          } else {
-            const removedBoard = removeBlocks(newBoard);
-            setBoard(removedBoard);
           }
-
+          console.log(newBlockHistory[1]);
           setBlockHitory(newBlockHistory);
-        },
-        (10 * 1) / Math.floor(removeLine / 10 + 1),
-      );
+          setBoard(newBoard);
+        } else if (seconds % (20 * (1 / Math.floor(removeLine / 10 + 1))) === 0) {
+          setBoard(blockFall(newBoard));
+        } else if (newBlockMove[0] === 1) {
+          setBoard(leftMoveBlock(newBoard));
+        } else if (newBlockMove[1] === 1) {
+          setBoard(rightMoveBlock(newBoard));
+        } else if (newBlockMove[2] === 1) {
+          setBoard(blockFall(newBoard));
+        } else if (newBlockMove[3] === 1) {
+          const updatedBoard: number[][] | undefined = hardDrop(newBoard);
+          if (updatedBoard === undefined) return;
+          setBoard(updatedBoard);
+        } else if (newBlockMove[4] === 1) {
+          newBlockHistory[2][0]++;
+          console.log(newBlockHistory[1], newBlockHistory[1][newBlockHistory[1].length - 1]),
+            setBoard(
+              rotateBlock(
+                newBoard,
+                newBlockHistory[1][newBlockHistory[1].length - 1],
+                newBlockHistory[2][0],
+              ),
+            );
+        } else {
+          const removedBoard = removeBlocks(newBoard);
+          setBoard(removedBoard);
+        }
+
+        setBlockHitory(newBlockHistory);
+      }, 30);
     } else if (!isActive) {
       if (interval !== null) {
         clearInterval(interval);
@@ -187,7 +183,7 @@ const Home = () => {
           {board.map((row, y) =>
             row.map((cell, x) => (
               <>
-                <div
+                <motion.div
                   className={styles.cell}
                   key={`${x}-${y}`}
                   style={{
@@ -196,8 +192,13 @@ const Home = () => {
                       board[y][x] === 0 ? '#beefff' : ' #cecece  #c69bff  #c69bff #cecece',
                     borderWidth: board[y][x] === 0 ? 1 : 4,
                   }}
+                  initial={{ opacity: 1, scale: 1 }}
+                  animate={{
+                    opacity: board[y].every((cell) => cell !== 0) ? [1, 0, 1, 0] : 1,
+                    scale: board[y].every((cell) => cell !== 0) ? 0 : 1,
+                  }}
+                  transition={{ duration: 0.1 }}
                 />
-                {cell === 3 && <div className={styles.shadow} />}
               </>
             )),
           )}

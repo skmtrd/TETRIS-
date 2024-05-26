@@ -1,4 +1,5 @@
 .container {
+  z-index: -2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,7 +7,7 @@
   height: 100vh;
   min-height: 100vh;
   padding: 0 0.5rem;
-  background-color: rgb(84 218 255 / 30%);
+  background: linear-gradient(rgb(182 182 245), rgb(147 147 255), rgb(162 149 249));
 }
 
 .base {
@@ -19,13 +20,15 @@
 
 .board {
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   display: flex;
   flex-wrap: wrap;
   width: 300px;
   height: 600px;
   margin-top: 30px;
   overflow: hidden;
+  background: #0af;
+  border-radius: 7px;
 }
 
 .cell {
@@ -47,7 +50,7 @@
   width: 130px;
   height: 630px;
   color: white;
-  background-color: rgb(133 119 255);
+  background: linear-gradient(rgb(140 140 255), rgb(79 79 255), rgb(95 71 255));
   border-radius: 7px;
 }
 
@@ -131,9 +134,9 @@
   font-weight: bold;
   color: white;
   user-select: none;
-  background-color: rgb(43 40 162);
+  background: linear-gradient(to right, rgb(88 88 255), rgb(111 111 255), rgb(153 137 255));
   border-radius: 7px;
-  box-shadow: 0 5px 0 rgb(0 217 255);
+  box-shadow: 0 5px 0 rgb(62 123 254);
   transition: all 0.07s 0s linear;
 }
 
@@ -158,10 +161,8 @@
   position: absolute;
   z-index: 1;
   display: flex;
-  flex-wrap: wrap;
-  width: 300px;
-  height: 600px;
-  margin-top: 30px;
+  width: 30px;
+  height: 30px;
   background-color: rgb(0 0 0 / 70%);
   border-radius: 7px;
 }

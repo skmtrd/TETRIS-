@@ -219,8 +219,10 @@ const Home = () => {
     >
       <div className={styles.base}>
         <div className={styles.topInformation}>
-          <div>Level : {Math.floor(removeLine / 10 + 1)}</div>
-          <div style={{ marginLeft: 100 }}>remove : {removeLine}</div>
+          <div className={styles.strings}>Level : {Math.floor(removeLine / 10 + 1)}</div>
+          <div className={styles.strings} style={{ marginLeft: 100 }}>
+            remove : {removeLine}
+          </div>
         </div>
         <div className={styles.curtain} style={{ visibility: isActive ? 'hidden' : 'visible' }}>
           Press Start or Enter Key
@@ -254,37 +256,23 @@ const Home = () => {
             {nextBlockBoard.map((row, y) =>
               row.map((cell, x) => (
                 <div
-                  className={styles.cell}
+                  className={styles.nextBlockCell}
                   key={`${x}-${y}`}
                   style={{
                     backgroundColor: nextBlockBoard[y][x] === 0 ? '#98d7f5' : '#a556ff',
                     borderColor:
                       nextBlockBoard[y][x] === 0 ? '#98d7f5' : ' #cecece  #c69bff  #c69bff #cecece',
                     borderWidth: nextBlockBoard[y][x] === 0 ? 1 : 3,
-                    borderRadius: 5,
-                    width: '20px',
-                    height: '20px',
                   }}
                 />
               )),
             )}
           </div>
-          <div
-            className={styles.buttonsBox}
-            style={{ marginTop: 240, flexFlow: 'column', gap: 15 }}
-          >
-            <div
-              className={styles.buttons}
-              onClick={() => touchControlHandler(5)}
-              style={{ width: 100 }}
-            >
+          <div className={styles.buttonsBox} style={{ flexFlow: 'column', gap: 15 }}>
+            <div className={styles.buttons} onClick={() => touchControlHandler(5)}>
               Restart
             </div>
-            <div
-              className={styles.buttons}
-              onClick={() => touchControlHandler(6)}
-              style={{ width: 100 }}
-            >
+            <div className={styles.buttons} onClick={() => touchControlHandler(6)}>
               {isActive ? 'Stop' : 'Start'}
             </div>
           </div>

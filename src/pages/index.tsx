@@ -13,6 +13,7 @@ import {
   rotateBlock,
   removeBlocks,
   blocks,
+  colors,
 } from '../function';
 const Home = () => {
   const [board, setBoard] = useState(create2DArray(20, 10, 0));
@@ -128,9 +129,10 @@ const Home = () => {
   }
   if (board.flat().filter((cell) => cell !== 0).length !== 0) {
     for (const position of blocks[newBlockHistory[0][0]]) {
-      nextBlockBoard[position[0] + 1][position[1] - 3] = 1;
+      nextBlockBoard[position[0] + 1][position[1] - 3] = newBlockHistory[0][0] + 1;
     }
   }
+  console.log(newBlockHistory[0][0]);
 
   useEffect(() => {
     const handleTouchMove = (e: TouchEvent) => {
@@ -142,18 +144,19 @@ const Home = () => {
       let newBoard = structuredClone(board);
       interval = setInterval(() => {
         setSeconds((seconds) => seconds + 1);
-        if (newBoard.flat().filter((cell) => cell === 1).length === 0) {
+        if (newBoard.flat().filter((cell) => cell >= 1 && cell < 10).length === 0) {
           newBlockHistory[2][0] = 0;
           const nextBlockType = newBlockHistory[0].shift();
           nextBlockType !== undefined && newBlockHistory[1].push(nextBlockType);
           if (nextBlockType !== undefined) {
             for (const position of blocks[nextBlockType]) {
-              if (newBoard[position[0]][position[1]] === 2) {
+              if (newBoard[position[0]][position[1]] >= 10) {
                 setIsActive(false);
                 alert('game over');
                 return;
               }
-              newBoard[position[0]][position[1]] = 1;
+              newBoard[position[0]][position[1]] =
+                newBlockHistory[1][newBlockHistory[1].length - 1] + 1;
             }
           }
           setBlockHitory(newBlockHistory);
@@ -164,20 +167,28 @@ const Home = () => {
             speed[0] = 2;
           }
           if (seconds % speed[0] === 0) {
-            console.log(speed[0]);
-            newBoard = blockFall(newBoard);
+            newBoard = blockFall(newBoard, newBlockHistory[1][newBlockHistory[1].length - 1] + 1);
           }
           if (newBlockMove[0] === 1) {
-            newBoard = leftMoveBlock(newBoard);
+            newBoard = leftMoveBlock(
+              newBoard,
+              newBlockHistory[1][newBlockHistory[1].length - 1] + 1,
+            );
           }
           if (newBlockMove[1] === 1) {
-            newBoard = rightMoveBlock(newBoard);
+            newBoard = rightMoveBlock(
+              newBoard,
+              newBlockHistory[1][newBlockHistory[1].length - 1] + 1,
+            );
           }
           if (newBlockMove[2] === 1) {
-            newBoard = blockFall(newBoard);
+            newBoard = blockFall(newBoard, newBlockHistory[1][newBlockHistory[1].length - 1] + 1);
           }
           if (newBlockMove[3] === 1) {
-            const updatedBoard: number[][] | undefined = hardDrop(newBoard);
+            const updatedBoard: number[][] | undefined = hardDrop(
+              newBoard,
+              newBlockHistory[1][newBlockHistory[1].length - 1] + 1,
+            );
             if (updatedBoard === undefined) return;
             newBoard = updatedBoard;
           }
@@ -187,13 +198,17 @@ const Home = () => {
               newBoard,
               newBlockHistory[1][newBlockHistory[1].length - 1],
               newBlockHistory[2][0],
+              newBlockHistory[1][newBlockHistory[1].length - 1] + 1,
             );
           }
-          const removedBoard = removeBlocks(newBoard);
+          const removedBoard = removeBlocks(
+            newBoard,
+            newBlockHistory[1][newBlockHistory[1].length - 1] + 1,
+          );
+
           setBoard(removedBoard);
         }
         setBlockHitory(newBlockHistory);
-        console.log(newBlockHistory[1][newBlockHistory[1].length - 1]);
       }, 50);
     } else if (!isActive) {
       if (interval !== null) {
@@ -235,8 +250,11 @@ const Home = () => {
                   className={styles.cell}
                   key={`${x}-${y}`}
                   style={{
-                    backgroundColor: board[y][x] === 0 ? '#000000' : '#000000',
-                    borderColor: board[y][x] === 0 ? '#ffffff' : '#ffffff',
+                    backgroundColor: board[y][x] === 0 ? '#000000' : colors[board[y][x] % 10][0],
+                    borderColor:
+                      board[y][x] === 0
+                        ? '#ffffff'
+                        : 'rgba(255, 255, 255, 0.514) rgba(0,0,0, 0.253)rgba(0,0,0, 0.253) rgba(255, 255, 255, 0.514)',
                     borderWidth: board[y][x] === 0 ? 1 : 4,
                   }}
                   initial={{ opacity: 1, scale: 1 }}
@@ -257,9 +275,13 @@ const Home = () => {
                   className={styles.nextBlockCell}
                   key={`${x}-${y}`}
                   style={{
-                    backgroundColor: nextBlockBoard[y][x] === 0 ? '#000000' : '#000000',
-                    borderColor: nextBlockBoard[y][x] === 0 ? '#ffffff' : ' #ffffff ',
-                    borderWidth: nextBlockBoard[y][x] === 0 ? 0 : 2,
+                    backgroundColor:
+                      nextBlockBoard[y][x] === 0 ? '#000000' : colors[nextBlockBoard[y][x] % 10][0],
+                    borderColor:
+                      nextBlockBoard[y][x] === 0
+                        ? '#ffffff'
+                        : 'rgba(255, 255, 255, 0.514) rgba(0,0,0, 0.253)rgba(0,0,0, 0.253) rgba(255, 255, 255, 0.514)',
+                    borderWidth: nextBlockBoard[y][x] === 0 ? 0 : 4,
                   }}
                 />
               )),

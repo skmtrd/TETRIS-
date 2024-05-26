@@ -126,7 +126,7 @@ const Home = () => {
       newBlockHistory[0].push(blocks);
     }
   }
-  if (board.flat().filter((cell) => cell === 1 || cell === 2).length !== 0) {
+  if (board.flat().filter((cell) => cell !== 0).length !== 0) {
     for (const position of blocks[newBlockHistory[0][0]]) {
       nextBlockBoard[position[0] + 1][position[1] - 3] = 1;
     }
@@ -134,7 +134,7 @@ const Home = () => {
 
   useEffect(() => {
     const handleTouchMove = (e: TouchEvent) => {
-      e.preventDefault(); // ページリロードなどのデフォルト動作をキャンセル
+      e.preventDefault();
     };
 
     let interval = null;
@@ -189,11 +189,11 @@ const Home = () => {
               newBlockHistory[2][0],
             );
           }
-          console.log('continue');
           const removedBoard = removeBlocks(newBoard);
           setBoard(removedBoard);
         }
         setBlockHitory(newBlockHistory);
+        console.log(newBlockHistory[1][newBlockHistory[1].length - 1]);
       }, 50);
     } else if (!isActive) {
       if (interval !== null) {
@@ -235,17 +235,15 @@ const Home = () => {
                   className={styles.cell}
                   key={`${x}-${y}`}
                   style={{
-                    backgroundColor: board[y][x] === 0 ? '#98d7f5' : '#a556ff',
-                    borderColor:
-                      board[y][x] === 0 ? '#beefff' : ' #cecece  #c69bff  #c69bff #cecece',
+                    backgroundColor: board[y][x] === 0 ? '#000000' : '#000000',
+                    borderColor: board[y][x] === 0 ? '#ffffff' : '#ffffff',
                     borderWidth: board[y][x] === 0 ? 1 : 4,
                   }}
                   initial={{ opacity: 1, scale: 1 }}
                   animate={{
-                    opacity: board[y].every((cell) => cell !== 0) ? [1, 0, 1, 0] : 1,
-                    scale: board[y].every((cell) => cell !== 0) ? 0 : 1,
+                    opacity: board[y].every((cell) => cell !== 0) ? 0 : 1,
                   }}
-                  transition={{ duration: 0.05 }}
+                  transition={{ duration: 1.2 }}
                 />
               </>
             )),
@@ -259,10 +257,9 @@ const Home = () => {
                   className={styles.nextBlockCell}
                   key={`${x}-${y}`}
                   style={{
-                    backgroundColor: nextBlockBoard[y][x] === 0 ? '#98d7f5' : '#a556ff',
-                    borderColor:
-                      nextBlockBoard[y][x] === 0 ? '#98d7f5' : ' #cecece  #c69bff  #c69bff #cecece',
-                    borderWidth: nextBlockBoard[y][x] === 0 ? 1 : 3,
+                    backgroundColor: nextBlockBoard[y][x] === 0 ? '#000000' : '#000000',
+                    borderColor: nextBlockBoard[y][x] === 0 ? '#ffffff' : ' #ffffff ',
+                    borderWidth: nextBlockBoard[y][x] === 0 ? 0 : 2,
                   }}
                 />
               )),

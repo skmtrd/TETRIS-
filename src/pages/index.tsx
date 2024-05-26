@@ -104,8 +104,15 @@ const Home = () => {
 
   const hanlers = useSwipeable({
     preventScrollOnSwipe: true,
-    delta: 2,
+    delta: 20,
     trackTouch: true,
+    onSwiping: (evenData) => {
+      if (evenData.dir === 'Left') {
+        touchControlHandler(1);
+      } else if (evenData.dir === 'Right') {
+        touchControlHandler(3);
+      }
+    },
     onSwipedLeft: () => touchControlHandler(1),
     onSwipedRight: () => touchControlHandler(3),
     onSwipedDown: () => touchControlHandler(4),
@@ -124,7 +131,10 @@ const Home = () => {
   }
 
   useEffect(() => {
-    console.log('useEffect');
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault(); // ページリロードなどのデフォルト動作をキャンセル
+    };
+
     let interval = null;
     if (isActive) {
       let newBoard = structuredClone(board);
@@ -188,7 +198,9 @@ const Home = () => {
         clearInterval(interval);
       }
     }
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
     return () => {
+      document.removeEventListener('touchmove', handleTouchMove);
       if (interval !== null) {
         clearInterval(interval);
       }

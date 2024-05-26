@@ -250,12 +250,13 @@ const Home = () => {
                   className={styles.cell}
                   key={`${x}-${y}`}
                   style={{
-                    backgroundColor: board[y][x] === 0 ? '#000000' : colors[board[y][x] % 10][0],
+                    backgroundColor: board[y][x] === 0 ? '#0f0f0f' : colors[board[y][x] % 10][0],
                     borderColor:
                       board[y][x] === 0
-                        ? '#ffffff'
+                        ? '#444444'
                         : 'rgba(255, 255, 255, 0.514) rgba(0,0,0, 0.253)rgba(0,0,0, 0.253) rgba(255, 255, 255, 0.514)',
                     borderWidth: board[y][x] === 0 ? 1 : 4,
+                    borderRadius: board[y][x] === 0 ? 0 : 3,
                   }}
                   initial={{ opacity: 1, scale: 1 }}
                   animate={{
@@ -276,12 +277,12 @@ const Home = () => {
                   key={`${x}-${y}`}
                   style={{
                     backgroundColor:
-                      nextBlockBoard[y][x] === 0 ? '#000000' : colors[nextBlockBoard[y][x] % 10][0],
+                      nextBlockBoard[y][x] === 0 ? '#2b2b2b' : colors[nextBlockBoard[y][x] % 10][0],
                     borderColor:
                       nextBlockBoard[y][x] === 0
                         ? '#ffffff'
                         : 'rgba(255, 255, 255, 0.514) rgba(0,0,0, 0.253)rgba(0,0,0, 0.253) rgba(255, 255, 255, 0.514)',
-                    borderWidth: nextBlockBoard[y][x] === 0 ? 0 : 4,
+                    borderWidth: nextBlockBoard[y][x] === 0 ? 0 : 3,
                   }}
                 />
               )),

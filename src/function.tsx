@@ -15,12 +15,12 @@ export {
 };
 const colors = [
   ['#fff'],
-  ['skyblue'],
+  ['#535eff'],
   ['yellow'],
   ['purple'],
   ['blue'],
   ['green'],
-  ['#94f35c'],
+  ['#4c7435'],
   ['red'],
 ];
 
@@ -259,7 +259,7 @@ const rotatePosiotions = [
   ],
 ];
 //下にずらすとき色の保持しなければいけない
-const removeBlocks = (board: number[][], color: number) => {
+const removeBlocks = (board: number[][]) => {
   const newBlockposition = [];
   for (let y = 19; y >= 0; y--) {
     const fixedBlock = [0];
@@ -274,12 +274,12 @@ const removeBlocks = (board: number[][], color: number) => {
       for (let f = 0; f <= y; f++) {
         for (let x = 0; x < 10; x++) {
           if (board[f][x] >= 10) {
+            newBlockposition.push([f + 1, x, board[f][x]]);
             board[f][x] = 0;
-            newBlockposition.push([f + 1, x]);
           }
         }
       }
-      const newBoard = replaceNumberWithArray(board, 10, newBlockposition);
+      const newBoard = replaceNumberWithArrayAndColor(board, newBlockposition);
       return newBoard;
     } else {
       continue;
@@ -329,7 +329,7 @@ const rotateBlock = (
         for (const pos of newBlockPosition) {
           pos[1] = pos[1] + 1;
         }
-      } else if (board[pos[0]] === undefined || board[pos[0]][pos[1]] === 2) {
+      } else if (board[pos[0]] === undefined || board[pos[0]][pos[1]] >= 10) {
         return board;
       } else {
         run[0]++;
@@ -363,6 +363,12 @@ function replaceChoiceNumber(array: number[][], preNum: number, newNum: number) 
 const replaceNumberWithArray = (board: number[][], num: number, array: number[][]) => {
   for (const position of array) {
     board[position[0]][position[1]] = num;
+  }
+  return board;
+};
+const replaceNumberWithArrayAndColor = (board: number[][], array: number[][]) => {
+  for (const [y, x, color] of array) {
+    board[y][x] = color;
   }
   return board;
 };

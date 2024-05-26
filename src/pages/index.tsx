@@ -123,6 +123,12 @@ const Home = () => {
     [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
     [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
     [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
   ]);
   const [isActive, setIsActive] = useState(false);
   const [seconds, setSeconds] = useState(0);
@@ -234,40 +240,42 @@ const Home = () => {
               newBoard[position[0]][position[1]] = 1;
             }
           }
-          console.log(newBlockHistory[1]);
           setBlockHitory(newBlockHistory);
           setBoard(newBoard);
         } else {
-          if (seconds % (20 - Math.floor(removeLine / 10 + 1) * 2) === 0) {
-            console.log(20 - Math.floor(removeLine / 10 + 1) * 2);
-            console.log('fall');
+          const speed = [20 - Math.floor(removeLine / 10 + 1) * 2];
+          if (speed[0] <= 1) {
+            speed[0] = 2;
+          }
+          if (seconds % speed[0] === 0) {
+            console.log(speed[0]);
             newBoard = blockFall(newBoard);
           }
           if (newBlockMove[0] === 1) {
-            setBoard(leftMoveBlock(newBoard));
-          } else if (newBlockMove[1] === 1) {
-            setBoard(rightMoveBlock(newBoard));
-          } else if (newBlockMove[2] === 1) {
-            setBoard(blockFall(newBoard));
-          } else if (newBlockMove[3] === 1) {
+            newBoard = leftMoveBlock(newBoard);
+          }
+          if (newBlockMove[1] === 1) {
+            newBoard = rightMoveBlock(newBoard);
+          }
+          if (newBlockMove[2] === 1) {
+            newBoard = blockFall(newBoard);
+          }
+          if (newBlockMove[3] === 1) {
             const updatedBoard: number[][] | undefined = hardDrop(newBoard);
             if (updatedBoard === undefined) return;
-            setBoard(updatedBoard);
-          } else if (newBlockMove[4] === 1) {
-            newBlockHistory[2][0]++;
-            console.log(newBlockHistory[1], newBlockHistory[1][newBlockHistory[1].length - 1]),
-              setBoard(
-                rotateBlock(
-                  newBoard,
-                  newBlockHistory[1][newBlockHistory[1].length - 1],
-                  newBlockHistory[2][0],
-                ),
-              );
-          } else {
-            console.log('continue');
-            const removedBoard = removeBlocks(newBoard);
-            setBoard(removedBoard);
+            newBoard = updatedBoard;
           }
+          if (newBlockMove[4] === 1) {
+            newBlockHistory[2][0]++;
+            newBoard = rotateBlock(
+              newBoard,
+              newBlockHistory[1][newBlockHistory[1].length - 1],
+              newBlockHistory[2][0],
+            );
+          }
+          console.log('continue');
+          const removedBoard = removeBlocks(newBoard);
+          setBoard(removedBoard);
         }
         setBlockHitory(newBlockHistory);
       }, 50);

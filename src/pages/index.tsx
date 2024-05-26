@@ -201,10 +201,7 @@ const Home = () => {
               newBlockHistory[1][newBlockHistory[1].length - 1] + 1,
             );
           }
-          const removedBoard = removeBlocks(
-            newBoard,
-            newBlockHistory[1][newBlockHistory[1].length - 1] + 1,
-          );
+          const removedBoard = removeBlocks(newBoard);
 
           setBoard(removedBoard);
         }

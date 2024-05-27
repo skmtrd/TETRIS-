@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { motion } from 'framer-motion';
 import styles from './index.module.css';
+import swal from 'sweetalert2';
 
 import {
   create2DArray,
@@ -152,7 +153,12 @@ const Home = () => {
             for (const position of blocks[nextBlockType]) {
               if (newBoard[position[0]][position[1]] >= 10) {
                 setIsActive(false);
-                alert('game over');
+                swal.fire({
+                  icon: 'error',
+                  title: 'Game Over',
+                  background: '#161616',
+                  color: '#ffffff',
+                });
                 setBoard(create2DArray(20, 10, 0));
                 return;
               }

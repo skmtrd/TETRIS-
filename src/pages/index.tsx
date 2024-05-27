@@ -192,8 +192,12 @@ const Home = () => {
             newBoard = blockFall(newBoard, newBlockHistory[1][newBlockHistory[1].length - 1] + 1);
           }
           if (newBlockMove[3] === 1) {
-            const updatedBoard: number[][] | undefined = hardDrop(
+            let updatedBoard: number[][] | undefined = hardDrop(
               newBoard,
+              newBlockHistory[1][newBlockHistory[1].length - 1] + 1,
+            );
+            updatedBoard = blockFall(
+              updatedBoard,
               newBlockHistory[1][newBlockHistory[1].length - 1] + 1,
             );
             if (updatedBoard === undefined) return;

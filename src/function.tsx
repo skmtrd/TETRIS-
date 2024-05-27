@@ -472,4 +472,5 @@ const hardDrop = (board: number[][], color: number) => {
     if (contineuFalling[0] === 1) continue;
     return newBoard;
   }
+  return newBoard;
 };

@@ -294,6 +294,20 @@ const Home = () => {
               )),
             )}
           </div>
+          <div className={styles.userGuideBase}>
+            <div className={styles.userGuide}>
+              <div className={styles.userGuideText} style={{ fontWeight: 'bold', fontSize: 17 }}>
+                Guide
+              </div>
+              <div className={styles.userGuideText}>Left : ←</div>
+              <div className={styles.userGuideText}>Right : →</div>
+              <div className={styles.userGuideText}>Rotate : ↑</div>
+              <div className={styles.userGuideText}>Drop : ↓</div>
+              <div className={styles.userGuideText}>Hard D : space</div>
+              <div className={styles.userGuideText}>Restart : R</div>
+              <div className={styles.userGuideText} />
+            </div>
+          </div>
           <div className={styles.buttonsBox} style={{ flexFlow: 'column', gap: 15 }}>
             <div className={styles.buttons} onClick={() => touchControlHandler(5)}>
               Restart

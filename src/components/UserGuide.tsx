@@ -1,6 +1,15 @@
 import styles from '../pages/index.module.css';
 import React from 'react';
 
+const userGuideText = [
+  'Left : ←',
+  'Right : →',
+  'Rotate : ↑',
+  'Drop : ↓',
+  'Hard D : space',
+  'Restart : R',
+];
+
 const UserGuide = () => {
   return (
     <div className={styles.userGuideBase}>
@@ -8,12 +17,11 @@ const UserGuide = () => {
         <div className={styles.userGuideText} style={{ fontWeight: 'bold', fontSize: 17 }}>
           Guide
         </div>
-        <div className={styles.userGuideText}>Left : ←</div>
-        <div className={styles.userGuideText}>Right : →</div>
-        <div className={styles.userGuideText}>Rotate : ↑</div>
-        <div className={styles.userGuideText}>Drop : ↓</div>
-        <div className={styles.userGuideText}>Hard D : space</div>
-        <div className={styles.userGuideText}>Restart : R</div>
+        {userGuideText.map((text, index) => (
+          <div className={styles.userGuideText} key={index}>
+            {text}
+          </div>
+        ))}
         <div className={styles.userGuideText} />
       </div>
     </div>

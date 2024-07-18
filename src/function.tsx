@@ -69,7 +69,6 @@ const blocks = [
   ],
 ];
 const rotatePosiotions = [
-  //1
   [
     [
       [0, -1],
@@ -96,7 +95,6 @@ const rotatePosiotions = [
       [1, 1],
     ],
   ],
-  //2
   [
     [
       [0, 0],
@@ -123,7 +121,6 @@ const rotatePosiotions = [
       [1, 1],
     ],
   ],
-  //3
   [
     [
       [0, 1],
@@ -150,7 +147,6 @@ const rotatePosiotions = [
       [1, 1],
     ],
   ],
-  //4
   [
     [
       [0, 2],
@@ -177,7 +173,6 @@ const rotatePosiotions = [
       [1, 1],
     ],
   ],
-  //5
   [
     [
       [1, 0],

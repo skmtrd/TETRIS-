@@ -1,4 +1,4 @@
-import styles from '../pages/index.module.css';
+import styles from '../styles/index.module.css';
 import React from 'react';
 
 const userGuideText = [

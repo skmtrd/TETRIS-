@@ -1,4 +1,4 @@
-import styles from '../pages/index.module.css';
+import styles from '../styles/index.module.css';
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -6,12 +6,17 @@ type Prop = {
   board: number[][];
   isActive: boolean;
   colors: string[][];
+  touchControlHandler: (num: number) => void;
 };
 
-const Board: React.FC<Prop> = ({ board, isActive, colors }) => {
+const Board: React.FC<Prop> = ({ board, isActive, colors, touchControlHandler }) => {
   return (
     <>
-      <div className={styles.curtain} style={{ visibility: isActive ? 'hidden' : 'visible' }}>
+      <div
+        className={styles.curtain}
+        style={{ visibility: isActive ? 'hidden' : 'visible' }}
+        onClick={() => touchControlHandler(6)}
+      >
         Press Start or Enter Key
       </div>
       <div className={styles.board}>

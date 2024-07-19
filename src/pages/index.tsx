@@ -1,4 +1,4 @@
-import styles from './index.module.css';
+import styles from '../styles/index.module.css';
 
 import { colors } from '../function';
 import { useGame } from '../Hooks/useGame';
@@ -28,7 +28,12 @@ const Home = () => {
     >
       <div className={styles.base}>
         <TopInfo removeLine={removeLine} />
-        <Board board={board} isActive={isActive} colors={colors} />
+        <Board
+          board={board}
+          isActive={isActive}
+          colors={colors}
+          touchControlHandler={touchControlHandler}
+        />
         <SideInfo
           nextBlockBoard={nextBlockBoard}
           isActive={isActive}
